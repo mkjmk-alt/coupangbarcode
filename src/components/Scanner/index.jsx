@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Camera, Upload, Scan as ScanIcon } from 'lucide-react';
 import CameraScan from './CameraScan';
 import ImageScan from './ImageScan';
@@ -7,6 +7,7 @@ import ResultDisplay from './ResultDisplay';
 export default function Scanner() {
     const [mode, setMode] = useState(null); // null | 'camera' | 'image'
     const [scanResult, setScanResult] = useState(null);
+    const imageScanKey = useRef(0);
 
     const handleScan = (decodedText, decodedResult) => {
         setScanResult({
@@ -21,6 +22,13 @@ export default function Scanner() {
         setScanResult(null);
     };
 
+    const switchToMode = (newMode) => {
+        if (newMode === 'image') {
+            imageScanKey.current += 1; // Increment key to force remount
+        }
+        setMode(newMode);
+    };
+
     // Initial state: Show two big buttons
     if (mode === null) {
         return (
@@ -28,7 +36,7 @@ export default function Scanner() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Camera Scan Button */}
                     <button
-                        onClick={() => setMode('camera')}
+                        onClick={() => switchToMode('camera')}
                         className="card hover:shadow-lg transition-all duration-200 p-8 flex flex-col items-center justify-center gap-4 min-h-[280px] bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 hover:border-blue-400"
                     >
                         <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center">
@@ -48,7 +56,7 @@ export default function Scanner() {
 
                     {/* File Upload Button */}
                     <button
-                        onClick={() => setMode('image')}
+                        onClick={() => switchToMode('image')}
                         className="card hover:shadow-lg transition-all duration-200 p-8 flex flex-col items-center justify-center gap-4 min-h-[280px] bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 hover:border-green-400"
                     >
                         <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center">
@@ -98,7 +106,7 @@ export default function Scanner() {
                 {mode === 'camera' ? (
                     <CameraScan onScan={handleScan} />
                 ) : (
-                    <ImageScan key={mode} onScan={handleScan} />
+                    <ImageScan key={imageScanKey.current} onScan={handleScan} />
                 )}
             </div>
 
@@ -106,7 +114,7 @@ export default function Scanner() {
             {mode === 'camera' && (
                 <div className="flex justify-center">
                     <button
-                        onClick={() => setMode('image')}
+                        onClick={() => switchToMode('image')}
                         className="btn btn-secondary flex items-center gap-2"
                     >
                         <Upload size={18} />
