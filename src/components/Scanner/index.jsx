@@ -98,7 +98,7 @@ export default function Scanner() {
                 {mode === 'camera' ? (
                     <CameraScan onScan={handleScan} />
                 ) : (
-                    <ImageScan onScan={handleScan} />
+                    <ImageScan key={mode} onScan={handleScan} />
                 )}
             </div>
 
