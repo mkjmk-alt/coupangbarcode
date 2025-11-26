@@ -102,6 +102,19 @@ export default function Scanner() {
                 )}
             </div>
 
+            {/* Switch Mode Button - Only show in camera mode */}
+            {mode === 'camera' && (
+                <div className="flex justify-center">
+                    <button
+                        onClick={() => setMode('image')}
+                        className="btn btn-secondary flex items-center gap-2"
+                    >
+                        <Upload size={18} />
+                        <span>Scan an Image File</span>
+                    </button>
+                </div>
+            )}
+
             {scanResult && (
                 <ResultDisplay result={scanResult} />
             )}
