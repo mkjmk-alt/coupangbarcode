@@ -1,10 +1,11 @@
 import { useState, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import { Upload } from 'lucide-react';
+import { Upload, CheckCircle } from 'lucide-react';
 
 export default function ImageScan({ onScan }) {
     const [isDragging, setIsDragging] = useState(false);
     const [isScanning, setIsScanning] = useState(false);
+    const [scanComplete, setScanComplete] = useState(false);
     const fileInputRef = useRef(null);
 
     const handleFile = async (file) => {
@@ -16,6 +17,7 @@ export default function ImageScan({ onScan }) {
         try {
             const decodedText = await html5QrCode.scanFile(file, true);
             onScan(decodedText, { result: { format: { formatName: 'File Scan' } } });
+            setScanComplete(true); // Hide the upload interface after successful scan
         } catch (err) {
             console.error(err);
             alert('No barcode found in image.');
@@ -41,6 +43,21 @@ export default function ImageScan({ onScan }) {
             handleFile(e.dataTransfer.files[0]);
         }
     };
+
+    // If scan is complete, show success message instead of upload interface
+    if (scanComplete) {
+        return (
+            <div className="w-full h-full flex flex-col items-center justify-center p-8">
+                <CheckCircle size={64} className="text-green-400 mb-4" />
+                <p className="text-lg font-medium text-slate-200">
+                    Scan Complete!
+                </p>
+                <p className="text-sm text-slate-400 mt-2">
+                    Check the results below
+                </p>
+            </div>
+        );
+    }
 
     return (
         <div className="w-full h-full flex flex-col items-center justify-center p-8">
