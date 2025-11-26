@@ -5,17 +5,17 @@ export default function ResultDisplay({ result }) {
 
     const { text, format, timestamp } = result;
 
-    // Helper to highlight whitespace/special chars
+    // Helper to highlight whitespace/special chars with fluorescent red
     const renderHighlightedText = (str) => {
         return str.split('').map((char, index) => {
             if (char === ' ') {
-                return <span key={index} className="bg-red-500 text-white px-1 rounded text-xs mx-0.5">SPACE</span>;
+                return <span key={index} className="bg-red-500 text-white px-2 py-0.5 rounded text-xs mx-0.5 font-bold animate-pulse" style={{ backgroundColor: '#ff0066' }}>SPACE</span>;
             }
             if (char === '\n') {
-                return <span key={index} className="bg-red-500 text-white px-1 rounded text-xs mx-0.5">NEWLINE<br /></span>;
+                return <span key={index} className="bg-red-500 text-white px-2 py-0.5 rounded text-xs mx-0.5 font-bold animate-pulse" style={{ backgroundColor: '#ff0066' }}>NEWLINE<br /></span>;
             }
             if (char === '\t') {
-                return <span key={index} className="bg-red-500 text-white px-1 rounded text-xs mx-0.5">TAB</span>;
+                return <span key={index} className="bg-red-500 text-white px-2 py-0.5 rounded text-xs mx-0.5 font-bold animate-pulse" style={{ backgroundColor: '#ff0066' }}>TAB</span>;
             }
             return char;
         });
