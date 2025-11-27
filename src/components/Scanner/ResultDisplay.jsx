@@ -68,7 +68,7 @@ export default function ResultDisplay({ result }) {
                             <span>{normalizedText}</span>
                             <button
                                 onClick={() => copyToClipboard(normalizedText)}
-                                className="p-2 hover:bg-green-100 rounded-full text-green-700 transition-colors"
+                                className="p-2 hover:bg-blue-100 rounded-full text-blue-700 transition-colors"
                                 title="Copy Normalized Text"
                             >
                                 <Copy size={18} />

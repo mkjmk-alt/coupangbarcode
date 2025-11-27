@@ -57,18 +57,18 @@ export default function Scanner() {
                     {/* File Upload Button */}
                     <button
                         onClick={() => switchToMode('image')}
-                        className="card hover:shadow-lg transition-all duration-200 p-8 flex flex-col items-center justify-center gap-4 min-h-[280px] bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 hover:border-green-400"
+                        className="card hover:shadow-lg transition-all duration-200 p-8 flex flex-col items-center justify-center gap-4 min-h-[280px] bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 hover:border-blue-400"
                     >
-                        <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center">
+                        <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center">
                             <Upload size={40} className="text-white" />
                         </div>
                         <div className="text-center">
-                            <h3 className="text-xl font-bold text-green-900 mb-2">사진 업로드</h3>
-                            <p className="text-sm text-green-700">
+                            <h3 className="text-xl font-bold text-blue-900 mb-2">사진 업로드</h3>
+                            <p className="text-sm text-blue-700">
                                 저장된 이미지 파일에서<br />바코드/QR 코드를 읽습니다
                             </p>
                         </div>
-                        <div className="flex items-center gap-2 text-green-600 font-medium">
+                        <div className="flex items-center gap-2 text-blue-600 font-medium">
                             <Upload size={18} />
                             <span>파일 선택</span>
                         </div>
