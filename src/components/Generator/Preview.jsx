@@ -65,6 +65,11 @@ export default function Preview({ config }) {
                     </div>
                 ) : (
                     <>
+                        {config.productName && (
+                            <h3 className="text-xl font-bold text-slate-900 mb-4 text-center">
+                                {config.productName}
+                            </h3>
+                        )}
                         <canvas ref={canvasRef} className="max-w-full" />
                         <div className="mt-6 flex gap-4">
                             <button

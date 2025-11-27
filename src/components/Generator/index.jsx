@@ -36,7 +36,12 @@ export default function Generator() {
 
             <div className="lg:col-span-8 space-y-6">
                 <div className="card min-h-[500px] flex flex-col">
-                    <h2 className="text-lg font-bold mb-4">Preview</h2>
+                    <div className="flex items-center gap-2 mb-4">
+                        <h2 className="text-lg font-bold">Preview</h2>
+                        <span className="text-sm text-slate-500 font-normal">
+                            ({config.text.length} characters)
+                        </span>
+                    </div>
                     <Preview config={config} />
                 </div>
             </div>
