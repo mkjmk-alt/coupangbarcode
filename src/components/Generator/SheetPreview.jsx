@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Download, Printer } from 'lucide-react';
 
-export default function SheetPreview({ config, singleBarcodeUrl }) {
+export default function SheetPreview({ config, singleBarcodeUrl, onSheetGenerated }) {
     const canvasRef = useRef(null);
     const [sheetUrl, setSheetUrl] = useState(null);
 
@@ -112,21 +112,13 @@ export default function SheetPreview({ config, singleBarcodeUrl }) {
             }
 
             setSheetUrl(canvas.toDataURL('image/png'));
+            if (onSheetGenerated) {
+                onSheetGenerated(canvas.toDataURL('image/png'));
+            }
         };
 
         renderSheet();
-    }, [config, singleBarcodeUrl]);
-
-    const handleDownloadSheet = () => {
-        if (sheetUrl) {
-            const link = document.createElement('a');
-            link.download = `barcode-sheet-${config.text}.png`;
-            link.href = sheetUrl;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    };
+    }, [config, singleBarcodeUrl, onSheetGenerated]);
 
     return (
         <div className="flex flex-col items-center gap-4">
@@ -139,14 +131,6 @@ export default function SheetPreview({ config, singleBarcodeUrl }) {
                     style={{ width: '100%', height: 'auto', background: 'white', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
                 />
             </div>
-            <button
-                onClick={handleDownloadSheet}
-                className="btn btn-primary w-full md:w-auto"
-                disabled={!sheetUrl}
-            >
-                <Printer size={18} />
-                Download A4 Sheet
-            </button>
         </div>
     );
 }

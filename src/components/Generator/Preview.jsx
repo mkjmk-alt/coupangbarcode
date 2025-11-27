@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import bwipjs from 'bwip-js';
-import { Download, AlertCircle } from 'lucide-react';
+import { Download, AlertCircle, Printer } from 'lucide-react';
 import SheetPreview from './SheetPreview';
 
 export default function Preview({ config }) {
     const canvasRef = useRef(null);
     const [error, setError] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
+    const [sheetUrl, setSheetUrl] = useState(null);
 
     useEffect(() => {
         if (!config.text) return;
@@ -87,9 +88,32 @@ export default function Preview({ config }) {
 
             {/* Sheet Preview (Conditional) */}
             {config.showSheetOptions && (
-                <div className="animate-fade-in">
-                    <h3 className="text-lg font-bold mb-4">A4 Sheet Preview</h3>
-                    <SheetPreview config={config} singleBarcodeUrl={imageUrl} />
+                <div className="animate-fade-in border-t border-slate-200 pt-8">
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-lg font-bold">A4 Sheet Preview</h3>
+                        <button
+                            onClick={() => {
+                                if (sheetUrl) {
+                                    const link = document.createElement('a');
+                                    link.download = `barcode-sheet-${config.text}.png`;
+                                    link.href = sheetUrl;
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                }
+                            }}
+                            className="btn btn-secondary flex items-center gap-2"
+                            disabled={!sheetUrl}
+                        >
+                            <Printer size={18} />
+                            Download A4 Sheet
+                        </button>
+                    </div>
+                    <SheetPreview
+                        config={config}
+                        singleBarcodeUrl={imageUrl}
+                        onSheetGenerated={setSheetUrl}
+                    />
                 </div>
             )}
         </div>
