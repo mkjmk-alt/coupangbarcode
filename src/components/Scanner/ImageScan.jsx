@@ -81,7 +81,7 @@ export default function ImageScan({ onScan }) {
                 <input
                     type="file"
                     ref={fileInputRef}
-                    className="hidden"
+                    style={{ display: 'none' }}
                     accept="image/*"
                     onChange={(e) => handleFile(e.target.files[0])}
                 />
