@@ -102,7 +102,7 @@ export default function Preview({ config }) {
                                     document.body.removeChild(link);
                                 }
                             }}
-                            className="btn btn-secondary flex items-center gap-2"
+                            className="btn btn-primary flex items-center gap-2"
                             disabled={!sheetUrl}
                         >
                             <Printer size={18} />
