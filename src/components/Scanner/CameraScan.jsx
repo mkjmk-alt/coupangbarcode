@@ -6,18 +6,45 @@ export default function CameraScan({ onScan }) {
   const qrCodeRef = useRef(null);
 
   useEffect(() => {
-    const html5QrCode = new Html5Qrcode('reader');
+    const html5QrCode = new Html5Qrcode('reader', {
+      experimentalFeatures: {
+        useBarCodeDetectorIfSupported: true
+      },
+      formatsToSupport: [
+        0, // QR_CODE
+        1, // AZTEC
+        3, // CODE_39
+        4, // CODE_128
+        6, // DATA_MATRIX
+        7, // EAN_8
+        8, // EAN_13
+        11, // UPC_A
+        12, // UPC_E
+      ]
+    });
     qrCodeRef.current = html5QrCode;
+
+    const config = {
+      fps: 15, // Increased FPS for smoother scanning
+      qrbox: { width: 300, height: 150 }, // Wider box for 1D barcodes
+      aspectRatio: 1.0,
+      videoConstraints: {
+        width: { min: 640, ideal: 1280, max: 1920 },
+        height: { min: 480, ideal: 720, max: 1080 },
+        facingMode: "environment",
+        focusMode: "continuous"
+      }
+    };
+
     html5QrCode
       .start(
         { facingMode: 'environment' },
-        { fps: 10, qrbox: { width: 250, height: 250 } },
+        config,
         (decodedText, decodedResult) => {
           onScan(decodedText, decodedResult);
         },
         (errorMessage) => {
           // ignore minor errors
-          console.warn(errorMessage);
         }
       )
       .catch((err) => {

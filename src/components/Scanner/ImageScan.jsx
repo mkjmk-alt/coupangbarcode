@@ -12,7 +12,14 @@ export default function ImageScan({ onScan }) {
         if (!file) return;
 
         setIsScanning(true);
-        const html5QrCode = new Html5Qrcode("image-reader");
+        const html5QrCode = new Html5Qrcode("image-reader", {
+            experimentalFeatures: {
+                useBarCodeDetectorIfSupported: true
+            },
+            formatsToSupport: [
+                0, 1, 3, 4, 6, 7, 8, 11, 12 // Same formats as CameraScan
+            ]
+        });
 
         try {
             const decodedText = await html5QrCode.scanFile(file, true);
